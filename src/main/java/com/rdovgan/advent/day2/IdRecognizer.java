@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.LongStream;
 
 public class IdRecognizer {
@@ -39,13 +38,11 @@ public class IdRecognizer {
 	}
 
 	public static boolean isIncorrectId(long id) {
-		String idValue = Long.toString(id);
-		if (idValue.length() % 2 == 1) {
+		String s = Long.toString(id);
+		if (s.length() < 2) {
 			return false;
 		}
-		String firstPart = idValue.substring(0, idValue.length() / 2);
-		String secondPart = idValue.substring(idValue.length() / 2);
-		return Objects.equals(firstPart, secondPart);
+		return (s + s).indexOf(s, 1) != s.length();
 	}
 
 }
