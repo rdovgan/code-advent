@@ -24,6 +24,7 @@ mvnw.cmd
 *.iws
 *.ipr
 *.iml
+*.local.json
 
 # VS Code
 .vscode/
