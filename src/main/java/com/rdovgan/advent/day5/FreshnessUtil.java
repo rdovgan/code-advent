@@ -2,6 +2,7 @@ package com.rdovgan.advent.day5;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class FreshnessUtil {
@@ -10,6 +11,40 @@ public class FreshnessUtil {
 		boolean contains(long id) {
 			return id >= start && id < end;
 		}
+
+		Long defineTotal() {
+			return end - start + 1;
+		}
+	}
+
+	public static Long defineTotalFreshCount(List<String> data) {
+		List<Range> ranges = defineFreshRanges(data);
+		ranges = defineIntersections(ranges);
+		return ranges.stream().mapToLong(Range::defineTotal).sum();
+	}
+
+	private static List<Range> defineIntersections(List<Range> ranges) {
+		if (ranges.isEmpty()) {
+			return ranges;
+		}
+
+		var sorted = ranges.stream().sorted(Comparator.comparingLong(a -> a.start)).toList();
+		var merged = new java.util.ArrayList<Range>();
+
+		Range current = sorted.getFirst();
+
+		for (int i = 1; i < sorted.size(); i++) {
+			Range next = sorted.get(i);
+			if (next.start <= current.end) {
+				current = new Range(current.start, Math.max(current.end, next.end));
+			} else {
+				merged.add(current);
+				current = next;
+			}
+		}
+		merged.add(current);
+
+		return merged;
 	}
 
 	public static Long defineFreshCount(List<String> data) {
