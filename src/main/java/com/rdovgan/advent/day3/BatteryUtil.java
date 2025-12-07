@@ -1,17 +1,30 @@
 package com.rdovgan.advent.day3;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BatteryUtil {
 
-	public static Integer defineMaxJoltage(String battery) {
-		if (battery == null || battery.length() < 2)
+	public static Long defineMaxJoltage(String battery) {
+		if (battery == null || battery.isEmpty()) {
 			return null;
+		}
+		var result = new StringBuilder();
+		int start = 0, take = Math.min(12, battery.length());
 
-		return IntStream.range(0, battery.length() - 1)
-				.flatMap(i -> IntStream.range(i + 1, battery.length()).map(j -> (battery.charAt(i) - '0') * 10 + (battery.charAt(j) - '0')))
-				.max().stream().boxed().findFirst().orElse(null);
+		for (int i = 0; i < take; i++) {
+			int end = battery.length() - (take - i - 1);
+			int maxIdx = start;
+
+			for (int j = start + 1; j < end; j++) {
+				if (battery.charAt(j) > battery.charAt(maxIdx)) {
+					maxIdx = j;
+				}
+			}
+			result.append(battery.charAt(maxIdx));
+			start = maxIdx + 1;
+		}
+
+		return Long.parseLong(result.toString());
 	}
 
 	public static Long defineSumOfAllJoltages(List<String> batteryData) {
