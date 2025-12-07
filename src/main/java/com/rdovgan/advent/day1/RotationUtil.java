@@ -22,15 +22,31 @@ public class RotationUtil {
 		if (rotationValue == 0) {
 			return;
 		}
-		int oldValue = password.getPosition();
-		int absValue = Math.abs(rotationValue);
-		int clicks = absValue / 100;
-		int rem = absValue % 100;
-		if (rem != 0 && (rotationValue > 0 ? oldValue + rem >= 100 : oldValue - rem < 0)) {
-			clicks++;
+
+		int start = password.getPosition();
+		int count = 0;
+
+		if (rotationValue > 0) {
+			// Right rotation: count how many times we land on 0
+			// First time we hit 0 is after (100 - start) clicks, or 100 if start is 0
+			int firstCrossing = start == 0 ? 100 : (100 - start);
+			if (firstCrossing <= rotationValue) {
+				// We cross at firstCrossing, firstCrossing + 100, firstCrossing + 200, ...
+				count = 1 + (rotationValue - firstCrossing) / 100;
+			}
+		} else {
+			// Left rotation: count how many times we land on 0
+			int absRotation = -rotationValue;
+			// First time we hit 0 is after start clicks, or 100 if start is 0
+			int firstCrossing = start == 0 ? 100 : start;
+			if (firstCrossing <= absRotation) {
+				count = 1 + (absRotation - firstCrossing) / 100;
+			}
 		}
-		password.setPosition(Math.floorMod(oldValue + rotationValue, 100));
-		password.setPassword(password.getPassword() + clicks);
+
+		int finalPos = Math.floorMod(start + rotationValue, 100);
+		password.setPosition(finalPos);
+		password.setPassword(password.getPassword() + count);
 	}
 
 }
