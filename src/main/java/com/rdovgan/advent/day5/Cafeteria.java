@@ -8,5 +8,6 @@ public class Cafeteria {
 	public static void main(String[] args) {
 		List<String> data = new ResourceData().loadFromResource("data5.csv");
 		System.out.println(FreshnessUtil.defineFreshCount(data));
+		System.out.println(FreshnessUtil.defineTotalFreshCount(data));
 	}
 }
