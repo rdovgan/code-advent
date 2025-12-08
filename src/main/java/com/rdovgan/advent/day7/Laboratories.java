@@ -8,5 +8,7 @@ public class Laboratories {
 	public static void main(String[] args) {
 		List<String> data = new ResourceData().loadFromResource("data7.csv");
 		System.out.println(TeleporterLab.countBeamSplits(data));
+		System.out.println(TeleporterLab.countQuantumTimelines(data));
+		System.out.println(QuantumManifold.countTimelines(data));
 	}
 }
