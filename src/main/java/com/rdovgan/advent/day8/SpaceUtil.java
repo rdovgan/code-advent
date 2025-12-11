@@ -111,12 +111,12 @@ public class SpaceUtil {
 				parent[i] = i;
 		}
 
-		int find(int x) {
-			while (parent[x] != x) {
-				parent[x] = parent[parent[x]];
-				x = parent[x];
+		int find(int point) {
+			while (parent[point] != point) {
+				parent[point] = parent[parent[point]];
+				point = parent[point];
 			}
-			return x;
+			return point;
 		}
 
 		void union(int x, int y) {
