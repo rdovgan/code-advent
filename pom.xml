@@ -50,6 +50,21 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.6.2</version>
+				<configuration>
+					<mainClass>com.rdovgan.advent.day9.MovieTheater</mainClass>
+					<cleanupDaemonThreads>false</cleanupDaemonThreads>
+					<execArgs>
+						<execArg>-Xmx4g</execArg>
+						<execArg>-classpath</execArg>
+						<classpath/>
+						<execArg>${exec.mainClass}</execArg>
+					</execArgs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
