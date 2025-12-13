@@ -4,9 +4,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class AnagramCreator {
 
@@ -55,11 +57,11 @@ public class AnagramCreator {
 	 * @return list of shuffled words
 	 */
 	public List<String> createAnagrams() {
-		List<String> originalWords = resourceData.loadFromResource("words.csv");
+		List<String> lines = resourceData.loadFromResource("words.csv");
 		List<String> anagrams = new ArrayList<>();
 
-		for (String word : originalWords) {
-			anagrams.add(shuffleWord(word));
+		for (String line : lines) {
+			anagrams.add(Arrays.stream(line.split(" ")).map(this::shuffleWord).collect(Collectors.joining(" ")));
 		}
 
 		return anagrams;

@@ -39,12 +39,13 @@ public class ResourceData {
 	}
 
 	public void writeToResource(String resourcePath, List<String> values) {
-		String filePath = getClass().getClassLoader().getResource("").getPath() + resourcePath;
+		String filePath = "src/main/resources/" + resourcePath;
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)))) {
 			for (String value : values) {
 				writer.write(value);
 				writer.newLine();
 			}
+			System.out.println("Anagrams successfully written to: " + filePath);
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to write data to: " + resourcePath, e);
 		}
