@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,4 +37,17 @@ public class ResourceData {
 		}
 		return values;
 	}
+
+	public void writeToResource(String resourcePath, List<String> values) {
+		String filePath = getClass().getClassLoader().getResource("").getPath() + resourcePath;
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)))) {
+			for (String value : values) {
+				writer.write(value);
+				writer.newLine();
+			}
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to write data to: " + resourcePath, e);
+		}
+	}
+
 }
